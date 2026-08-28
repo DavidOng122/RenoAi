@@ -75,3 +75,5 @@ src/server/pipeline     确认后的并行分析
 src/server/pricing      独立价格引擎
 data/pricing            价格知识库
 ```
+
+完整的页面路由、数据所有权和后续预留目录见 [docs/architecture.md](docs/architecture.md)。
