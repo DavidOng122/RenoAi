@@ -1,0 +1,47 @@
+[
+  {
+    "price_key": "DOOR_ALIGNMENT",
+    "affected_item_terms": ["door", "swing door", "bedroom door"],
+    "problem_terms": ["does not close", "won't close", "cannot close", "rubbing", "scraping", "alignment", "bottom edge"],
+    "estimated_min_price": 80,
+    "estimated_max_price": 180,
+    "currency": "SGD",
+    "source": "internal + Singapore market benchmark"
+  },
+  {
+    "price_key": "PIPE_LEAK_REPAIR",
+    "affected_item_terms": ["pipe", "tap", "faucet", "sink"],
+    "problem_terms": ["leak", "leaking", "water leakage", "dripping"],
+    "estimated_min_price": 120,
+    "estimated_max_price": 280,
+    "currency": "SGD",
+    "source": "Singapore market benchmark"
+  },
+  {
+    "price_key": "POWER_SOCKET_REPAIR",
+    "affected_item_terms": ["socket", "power point", "outlet", "switch"],
+    "problem_terms": ["not working", "no power", "sparking", "loose", "burnt"],
+    "estimated_min_price": 60,
+    "estimated_max_price": 160,
+    "currency": "SGD",
+    "source": "Singapore market benchmark"
+  },
+  {
+    "price_key": "WALL_PATCH_PAINT",
+    "affected_item_terms": ["wall", "ceiling", "plaster", "paint"],
+    "problem_terms": ["crack", "peeling", "hole", "stain", "patch"],
+    "estimated_min_price": 150,
+    "estimated_max_price": 450,
+    "currency": "SGD",
+    "source": "Singapore market benchmark"
+  },
+  {
+    "price_key": "AIRCON_BASIC_REPAIR",
+    "affected_item_terms": ["aircon", "air conditioner", "ac unit"],
+    "problem_terms": ["not cold", "leaking", "noisy", "water", "weak airflow"],
+    "estimated_min_price": 80,
+    "estimated_max_price": 250,
+    "currency": "SGD",
+    "source": "Singapore market benchmark"
+  }
+]
