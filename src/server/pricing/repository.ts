@@ -6,7 +6,7 @@ export type PriceKnowledgeRow = {
   keywords: string[];
   estimated_min_price: number;
   estimated_max_price: number;
-  currency: "SGD";
+  currency: string;
 };
 
 export function getPriceRows(): PriceKnowledgeRow[] { return rows; }

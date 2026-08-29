@@ -4,6 +4,8 @@ import type { Property } from "@/schemas/property.schema";
 import type { ProblemAnalysis } from "@/schemas/problem-brief.schema";
 import type { MediaItem, ProjectBrief, RequestStatus } from "@/schemas/project-brief.schema";
 
+export type ClarificationAnswer = { question: string; answer: string };
+
 export type RepairRequest = {
   id: string;
   property_id: string;
@@ -12,6 +14,7 @@ export type RepairRequest = {
   status: RequestStatus;
   created_at: string;
   analysis?: ProblemAnalysis;
+  clarification_history?: ClarificationAnswer[];
   project?: ProjectBrief;
   evidence: { photos: MediaItem[]; videos: MediaItem[] };
 };

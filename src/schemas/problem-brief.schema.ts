@@ -16,7 +16,7 @@ export const ProblemBriefSchema = z.object({
 export const ProblemAnalysisSchema = z.object({
   problem_brief: ProblemBriefSchema,
   is_complete: z.boolean(),
-  missing_questions: z.array(z.string()).max(3),
+  missing_questions: z.array(z.string()).max(4),
 });
 
 export type ProblemBrief = z.infer<typeof ProblemBriefSchema>;
