@@ -17,7 +17,7 @@
 
 1. Qwen generates `ProblemBrief` and checks completeness from selected property, description, evidence, and the optional category hint.
 2. The homeowner may edit the Problem Brief, then confirms it before analysis begins.
-3. DeepSeek receives only the confirmed Problem Brief and produces `RepairResult`; it never calculates prices.
+3. Qwen receives only the confirmed Problem Brief and produces `RepairResult`; it never calculates prices.
 4. The Price Engine receives the same confirmed Problem Brief and produces `PriceResult` without an LLM or RepairResult input.
 5. Both results merge into a single canonical `ProjectBrief`.
 6. User view, contractor view, and PDF render `ProjectBrief` without adding new repair facts.
