@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "daytona:validate-pricing": "node scripts/run-daytona-pricing-validation.mjs"
+    "daytona:validate-pricing": "node scripts/run-daytona-pricing-validation.mjs",
     "generate:price-migration": "node scripts/generate-price-migration.mjs"
   },
   "dependencies": {
