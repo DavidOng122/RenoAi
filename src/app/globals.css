@@ -133,7 +133,7 @@ h1 { font-size: clamp(42px, 6vw, 76px); line-height: .98; max-width: 770px; }
 .brief-message-thumb { width: 49px; height: 49px; border-radius: 10px; background: #d9d9d9; flex-shrink: 0; }
 .brief-message p { margin: 0; font-size: 12px; line-height: 1.18; color: #000; letter-spacing: -.12px; }
 .brief-message .more-badge { display: inline-flex; align-items: center; justify-content: center; height: 13px; min-width: 23px; padding: 0 7px; border-radius: 17px; background: #323232; color: white; font-size: 8px; font-weight: 510; letter-spacing: -.08px; margin-left: 4px; vertical-align: middle; }
-.brief-card { border: 1px solid #ebe6e6; border-radius: 21px; padding-top: 20px; padding-bottom: 4px; background: #ebe6e6; }
+.brief-card { border: 1px solid #ebe6e6; border-radius: 21px; padding-top: 20px; padding-bottom: 4px; background: #ffffff; }
 .brief-photos { display: flex; gap: 8px; padding: 0 13px 12px; }
 .brief-photo, .brief-photo-placeholder { width: 88px; height: 88px; border-radius: 15px; background: #f3f3f3; object-fit: cover; flex-shrink: 0; border: 0; }
 .brief-rows { display: flex; flex-direction: column; }
