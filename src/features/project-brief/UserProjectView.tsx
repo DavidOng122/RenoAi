@@ -1,19 +1,29 @@
 "use client";
 
-import Link from "next/link";
 import type { ProjectBrief } from "@/schemas/project-brief.schema";
-import { ProblemBriefCard } from "@/features/problem-brief/ProblemBriefCard";
-import { ArrowUpRight, Download } from "lucide-react";
+import { BadgeCheck, CheckCircle2, CircleAlert, Clock3, FileText, Image as ImageIcon, Lightbulb, MapPin, Share2, Sparkles, Table2, WalletCards, Wrench } from "lucide-react";
 
-export function UserProjectView({ project }: { project: ProjectBrief }) {
-  return <div className="stack">
-    <section className="card" style={{background:"var(--green)", color:"white"}}><span className="badge" style={{background:"var(--lime)"}}>Project ready</span><div style={{marginTop:24}}><div style={{opacity:.65, marginBottom:8}}>Estimated price</div>{project.pricing.available ? <div className="price" style={{color:"white"}}>S${project.pricing.estimated_min_price} – S${project.pricing.estimated_max_price}</div> : <h2>Price unavailable</h2>}<p style={{opacity:.7}}>Indicative range only. Final quote may change after inspection.</p></div></section>
-    <div className="two-col">
-      <section className="card"><div className="section-label">Likely issue</div><h2>{project.repair.likely_issue}</h2><div className="actions"><span className={project.repair.urgency === "High" ? "badge high" : "badge"}>{project.repair.urgency} urgency</span><span className="badge">{project.repair.confidence} confidence</span></div></section>
-      <section className="card"><div className="section-label">Recommended work</div><p style={{fontSize:18,lineHeight:1.55,margin:0}}>{project.repair.recommended_work}</p></section>
-    </div>
-    <div className="detail-list"><div className="detail"><small>Estimated duration</small><strong>{project.repair.estimated_duration}</strong></div><div className="detail"><small>Site visit</small><strong>{project.repair.site_visit_required ? "Required" : "May not be required"}</strong></div></div>
-    <section><div className="section-label">Confirmed problem</div><ProblemBriefCard brief={project.problem}/></section>
-    <div className="actions no-print"><Link className="primary-btn" href={`/requests/${project.request_id}/contractor`}>Contractor view <ArrowUpRight size={17}/></Link><button className="secondary-btn" onClick={() => window.print()}><Download size={16}/> Save as PDF</button></div>
-  </div>;
+type RequestBriefProps = { project: ProjectBrief; description?: string; category?: string };
+
+function money(project: ProjectBrief) { return project.pricing.available ? `S$${project.pricing.estimated_min_price} – ${project.pricing.estimated_max_price}` : "On assessment"; }
+function humanise(value?: string) { return value?.replaceAll("_", " ") || "General repair"; }
+
+export function UserProjectView({ project, description, category }: RequestBriefProps) {
+  const price = money(project);
+  const photo = project.evidence.photos[0]?.thumbnail_url || project.evidence.photos[0]?.storage_url || "/figma/sink-pipes.png";
+  const isKitchenLeak = project.problem.affected_item.toLowerCase().includes("kitchen sink");
+  const observations = isKitchenLeak ? ["Water visible under the sink", "Leak appears near the pipe joint", "Cabinet base is wet"] : [`Issue reported at ${project.problem.location.toLowerCase()}`, project.problem.duration ? `Present for ${project.problem.duration.toLowerCase()}` : "Condition needs confirmation on site", project.problem.condition || "Repair area should be inspected before work starts"];
+  const trade = category?.toLowerCase().includes("water") ? "Plumbing" : category || "General repair";
+  const work = project.repair.recommended_work.split(/\n|;|\.(?=\s|$)/).map((item) => item.trim()).filter(Boolean).slice(0, 3);
+  async function shareBrief() { const shareData = { title: "RenoAI repair brief", text: `${project.problem.affected_item}: ${project.repair.likely_issue}` }; if (navigator.share) await navigator.share(shareData); else { await navigator.clipboard.writeText(`${shareData.title}\n${shareData.text}`); alert("Brief copied to clipboard."); } }
+
+  return <article className="request-brief">
+    <section className="brief-hero"><div className="brief-overview"><div className="brief-ready"><BadgeCheck size={16}/> Brief ready</div><h1>{humanise(project.problem.affected_item)}</h1><p className="brief-location"><MapPin size={13}/>{project.problem.property} · {project.problem.location}</p></div><div className="brief-photo" aria-hidden="true" /></section>
+    <section className="brief-summary" aria-label="Estimate summary"><div><WalletCards size={17}/><span><small>Estimated price</small><strong>{price}</strong></span></div><div><Clock3 size={17}/><span><small>Estimated duration</small><strong>{project.repair.estimated_duration}</strong></span></div></section>
+    <section className="brief-section input-section"><div className="brief-heading"><h2>Your input</h2><button type="button">Edit</button></div><div className="input-content"><div className="input-photo"><img src={photo} alt="Submitted repair photo" /></div><div className="input-details"><div className="input-copy"><ImageIcon size={14}/><div><small>Description</small><p>{description || project.problem.observed_problem}</p></div></div><div className="issue-type"><small><CircleAlert size={12}/> Issue type</small><span>{category || humanise(project.problem.affected_item)}</span></div></div></div></section>
+    <section className="brief-section assessment-section"><div className="brief-heading icon-heading"><Sparkles size={17}/><h2>AI assessment</h2></div><div className="assessment-field"><small>Likely issue</small><strong>{project.repair.likely_issue}</strong></div><div className="assessment-field"><small>Observed</small><div className="observations">{observations.map((observation) => <span key={observation}><CheckCircle2 size={13}/>{observation}</span>)}</div></div><div className="assessment-field urgency"><small>Urgency</small><strong><i className={project.repair.urgency.toLowerCase()} />{project.repair.urgency === "Medium" ? "Low to medium" : project.repair.urgency}</strong></div></section>
+    <section className="brief-section work-section"><div className="brief-heading icon-heading"><Wrench size={17}/><h2>Recommended work</h2></div><div className="work-content"><ul>{(work.length ? work : [project.repair.recommended_work]).map((item) => <li key={item}>{item}</li>)}</ul><div className="trade"><small>Trade required</small><span>{trade}</span></div></div></section>
+    <section className="brief-section estimate-section"><div className="brief-heading icon-heading"><Table2 size={17}/><h2>Estimate</h2></div><div className="estimate-grid"><div><small>Price range</small><strong>{price}</strong></div><div><small>Estimated duration</small><strong>{project.repair.estimated_duration}</strong></div><div><small>Site visit</small><strong>{project.repair.site_visit_required ? "Recommended" : "Not required"}</strong></div></div><p className="estimate-note"><Lightbulb size={15}/> Final scope and price may vary after on-site inspection.</p></section>
+    <div className="brief-actions no-print"><button className="share-brief" type="button" onClick={shareBrief}><Share2 size={17}/> Share brief</button><button className="export-brief" type="button" onClick={() => window.print()}><FileText size={17}/> Export PDF</button></div>
+  </article>;
 }
