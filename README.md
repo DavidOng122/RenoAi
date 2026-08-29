@@ -108,6 +108,20 @@ ProblemAnalysis
 - **Authentication:** Auth.js handles Google OAuth; application secrets remain server-side.
 - **Resilient pricing:** Supabase is the production source, with a validated bundled fallback.
 
+## Sponsor integrations
+
+### Daytona — isolated pricing-data validation
+
+RenoAI uses Daytona for its offline pricing-data quality gate. Before reviewed price data is accepted, `npm run daytona:validate-pricing` creates an isolated TypeScript sandbox, clones the configured repository branch, and runs the production pricing validator inside that sandbox.
+
+This keeps data validation outside the live homeowner request path: the sandbox validates required fields, unique job codes, SGD currency, and valid price ranges, but never produces a user-facing estimate or receives Qwen, Supabase, OAuth, or application secrets. See [the Daytona integration notes](infra/daytona/README.md).
+
+### Nosana — asynchronous video-evidence processing
+
+RenoAI uses Nosana as the asynchronous GPU worker lane for uploaded repair videos. The worker design extracts representative frames and produces evidence metadata before selected frames are passed to Qwen, keeping expensive video work out of the interactive repair flow.
+
+The current product supports signed, owner-scoped video storage in Supabase; the Nosana worker contract is documented in [the Nosana integration notes](infra/nosana/README.md). This separation keeps the mobile experience responsive while providing a path to richer visual diagnosis.
+
 ## Tech stack
 
 | Layer | Technology |
@@ -118,7 +132,9 @@ ProblemAnalysis
 | Authentication | Auth.js with Google OAuth |
 | Database and storage | Supabase Postgres, Row Level Security, Supabase Storage |
 | Deployment | Vercel |
-| Pricing validation | Versioned JSON data, reproducible SQL migration, optional Daytona sandbox workflow |
+| Daytona | Isolated sandbox for production pricing-data validation |
+| Nosana | Asynchronous GPU worker lane for video-evidence frame extraction and metadata |
+| Pricing validation | Versioned JSON data and reproducible SQL migration |
 
 ## Run locally
 
@@ -163,6 +179,15 @@ NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your_supabase_publishable_key
 
 Apply the migrations in `supabase/migrations` before using Supabase-backed features. Never commit `.env.local`, and never expose `QWEN_API_KEY`, `AUTH_SECRET`, or OAuth client secrets through `NEXT_PUBLIC_*` variables.
 
+Optional sponsor integration configuration:
+
+```dotenv
+DAYTONA_API_KEY=your_daytona_api_key
+NOSANA_API_KEY=your_nosana_api_key
+```
+
+Daytona runs only when its validation command is invoked. Nosana is intentionally asynchronous and remains outside the synchronous repair and pricing request path.
+
 ## Useful commands
 
 ```bash
@@ -170,6 +195,7 @@ npm run dev                       # Start the local development server
 npm run build                     # Run the production build and type checks
 npm run generate:price-migration  # Rebuild the Supabase price migration
 node scripts/validate-pricing.mjs # Validate all production pricing rows
+npm run daytona:validate-pricing  # Validate pricing data in an isolated Daytona sandbox
 ```
 
 ## Repository map
