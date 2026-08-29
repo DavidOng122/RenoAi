@@ -7,6 +7,7 @@ export const MediaItemSchema = z.object({
   id: z.string(),
   type: z.enum(["photo", "video"]),
   storage_url: z.string(),
+  storage_path: z.string().optional(),
   thumbnail_url: z.string().optional(),
 });
 

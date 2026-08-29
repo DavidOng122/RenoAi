@@ -1,8 +1,20 @@
-import Link from "next/link";
-import { Plus } from "lucide-react";
-import { AppShell } from "@/components/AppShell";
+import { auth } from "@/auth";
+import { AccountAvatar, MobileBottomNav } from "@/components/MobileShell";
 import { RequestList } from "@/features/requests/RequestList";
 
-export default function RequestsPage() {
-  return <AppShell><div className="page-head"><div><div className="eyebrow">Repair requests</div><h1>Everything in one place.</h1></div><Link className="primary-btn" href="/home"><Plus size={17}/> New request</Link></div><RequestList/></AppShell>;
+export default async function RequestsPage() {
+  const session = await auth();
+  return (
+    <main className="brief-shell requests-shell">
+      <header className="requests-heading">
+        <div>
+          <h1>Request</h1>
+          <p>Your saved repair brief</p>
+        </div>
+        <AccountAvatar className="requests-avatar" user={session?.user} />
+      </header>
+      <RequestList />
+      <MobileBottomNav />
+    </main>
+  );
 }

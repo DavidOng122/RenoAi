@@ -11,6 +11,7 @@ function normalise(value: string) {
     .replace(/won't/g, "will not")
     .replace(/can't/g, "cannot")
     .replace(/doesn't/g, "does not")
+    .replace(/\b(broke|breaks?|breaking)\b/g, "broken")
     .replace(/\brubs?\b/g, "rubbing")
     .replace(/\bscrapes?\b/g, "scraping")
     .replace(/[^a-z0-9]+/g, " ")
@@ -31,13 +32,22 @@ function bestPhraseScore(text: string, phrases: string[], weight: number) {
   }, 0);
 }
 
+function bestKeywordScore(text: string, phrases: string[], weight: number) {
+  const textTokens = new Set(text.split(" ").filter(Boolean));
+  return phrases.reduce((best, phrase) => {
+    const phraseTokens = normalise(phrase).split(" ").filter(Boolean);
+    if (!phraseTokens.length || !phraseTokens.every((token) => textTokens.has(token))) return best;
+    return Math.max(best, phraseTokens.length * weight);
+  }, 0);
+}
+
 export function matchPriceRow(brief: ProblemBrief, rows: PriceKnowledgeRow[]) {
   const itemText = normalise(brief.affected_item);
-  const problemText = normalise([brief.observed_problem, brief.condition, ...Object.values(brief.dynamic_details).map(String)].filter(Boolean).join(" "));
+  const problemText = normalise([brief.affected_item, brief.observed_problem, brief.condition, ...Object.values(brief.dynamic_details).map(String)].filter(Boolean).join(" "));
 
   const candidates: ScoredMatch[] = rows.flatMap((row) => {
     const itemScore = bestPhraseScore(itemText, row.affected_item, 2);
-    const symptomScore = bestPhraseScore(problemText, row.keywords, 10);
+    const symptomScore = bestPhraseScore(problemText, row.keywords, 10) || bestKeywordScore(problemText, row.keywords, 8);
 
     // A repair type is only priceable when both the item and a specific symptom match.
     if (!itemScore || !symptomScore) return [];

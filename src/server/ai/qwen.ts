@@ -14,6 +14,7 @@ type Input = {
   category_hint?: string;
   clarification?: string;
   existing_problem_brief?: ProblemBrief;
+  existing_brief?: ProblemBrief;
   clarification_history?: ClarificationAnswer[];
   image_data_urls?: string[];
 };
@@ -24,44 +25,81 @@ function normaliseQuestion(value: string) {
 
 function demoAnalysis(input: Input): ProblemAnalysis {
   const text = `${input.description} ${input.clarification || ""}`.toLowerCase();
-  const category = input.category_hint?.toLowerCase() || "";
-  const isDoor = /door|门/.test(text + category);
-  const isWater = /leak|water|pipe|tap|漏水|水管|水龙头/.test(text + category);
-  const isElectric = /socket|power|switch|electric|插座|电/.test(text + category);
-  const isWall = /wall|ceiling|crack|paint|墙|天花/.test(text + category);
-  const isAircon = /aircon|air conditioner|空调/.test(text + category);
-  const item = isDoor ? "Door" : isWater ? (/tap|faucet|水龙头/.test(text) ? "Tap" : "Pipe") : isElectric ? "Power socket" : isWall ? "Wall / ceiling" : isAircon ? "Air conditioner" : "Unknown item";
+  const existingBrief = input.existing_problem_brief || input.existing_brief;
+  const selectedType = input.category_hint?.toLowerCase();
+  let item = "Unknown item";
+  if (selectedType?.includes("water")) item = /tap|faucet|水龙头/.test(text) ? "Tap" : /sink|basin|水槽/.test(text) ? "Sink / drainage" : /pipe|水管/.test(text) ? "Pipe" : "Plumbing fixture";
+  else if (selectedType?.includes("electrical")) item = /light|lamp|灯/.test(text) ? "Light fitting" : /switch|开关/.test(text) ? "Light switch" : /socket|outlet|插座/.test(text) ? "Power socket" : "Electrical fixture";
+  else if (selectedType?.includes("door") || selectedType?.includes("cabinet")) item = /cabinet|cupboard|柜/.test(text) ? "Cabinet" : "Door";
+  else if (selectedType?.includes("wall") || selectedType?.includes("ceiling")) item = /ceiling|天花/.test(text) ? "Ceiling" : "Wall";
+  else if (selectedType?.includes("tile") || selectedType?.includes("floor")) item = /tile|瓷砖/.test(text) ? "Floor tile" : "Flooring";
+  else if (/door|门/.test(text)) item = "Door";
+  else if (/leak|water|pipe|tap|漏水|水管|水龙头/.test(text)) item = /tap|faucet|水龙头/.test(text) ? "Tap" : "Pipe";
+  else if (/socket|power|switch|electric|插座|电/.test(text)) item = "Power socket";
+  else if (/wall|ceiling|crack|paint|墙|天花/.test(text)) item = "Wall / ceiling";
+  else if (/tile|floor|瓷砖|地板/.test(text)) item = "Tiles / floor";
+  else if (/aircon|air conditioner|空调/.test(text)) item = "Air conditioner";
   const locationMatch = text.match(/(bedroom|bathroom|kitchen|living room|balcony|卧室|厕所|浴室|厨房|客厅)/);
   const locationMap: Record<string,string> = { 卧室: "Bedroom", 厕所: "Bathroom", 浴室: "Bathroom", 厨房: "Kitchen", 客厅: "Living room" };
-  const location = locationMatch ? (locationMap[locationMatch[1]] || locationMatch[1].replace(/^./, c => c.toUpperCase())) : "Unknown";
-  const enough = item !== "Unknown item" && input.description.trim().length >= 12;
+  let location = locationMatch ? (locationMap[locationMatch[1]] || locationMatch[1].replace(/^./, c => c.toUpperCase())) : "Unknown";
+  if (item === "Unknown item" && existingBrief?.affected_item && existingBrief.affected_item !== "Unknown") item = existingBrief.affected_item;
+  if (location === "Unknown" && existingBrief?.location && existingBrief.location !== "Unknown") location = existingBrief.location;
+  const missingQuestions: string[] = [];
+  if (item === "Unknown item") missingQuestions.push("Which item or fixture is affected?");
+  if (location === "Unknown") missingQuestions.push("Where in the home is the issue located?");
+  if (input.description.trim().length < 12) missingQuestions.push("What happened, and what is the item doing now?");
+  const enough = missingQuestions.length === 0;
   return {
     problem_brief: {
       request_id: input.request_id, property_id: input.property.id, property: input.property.home_type,
-      location, affected_item: item, observed_problem: input.description.trim(),
-      condition: input.clarification?.trim() || "Based on homeowner description",
-      customer_goal: `Restore the ${item.toLowerCase()} to safe, normal working condition`,
-      dynamic_details: { category_hint: input.category_hint || null },
+      location, affected_item: item, observed_problem: input.description.trim() || existingBrief?.observed_problem || "Unknown",
+      condition: input.clarification?.trim() || existingBrief?.condition || "Based on homeowner description",
+      customer_goal: existingBrief?.customer_goal && existingBrief.customer_goal !== "Unknown"
+        ? existingBrief.customer_goal
+        : `Restore the ${item.toLowerCase()} to safe, normal working condition`,
+      dynamic_details: {
+        ...(existingBrief?.dynamic_details || {}),
+        selected_issue_type: input.category_hint || null,
+        issue_type_source: input.category_hint ? "user_selected" : "ai_inferred",
+      },
     },
     is_complete: enough,
-    missing_questions: enough ? [] : [item === "Unknown item" ? "Which item or fixture is affected?" : "Where in the home is the issue located?"],
+    missing_questions: missingQuestions.slice(0, 3),
   };
 }
 
 export async function createProblemAnalysis(input: Input): Promise<ProblemAnalysis> {
-  if (process.env.AI_DEMO_MODE === "true") return demoAnalysis(input);
-  if (!process.env.QWEN_API_KEY) {
-    throw new Error("Qwen is not configured. Set QWEN_API_KEY, or explicitly enable AI_DEMO_MODE.");
-  }
-  const analysis = await generateStructured({
+  const existingBrief = input.existing_problem_brief || input.existing_brief;
+  const analysis = process.env.AI_DEMO_MODE === "true" || !process.env.QWEN_API_KEY
+    ? demoAnalysis(input)
+    : await generateStructured({
     baseURL: process.env.QWEN_BASE_URL || "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
     apiKey: process.env.QWEN_API_KEY,
     model: process.env.QWEN_MODEL || "qwen3-vl-flash",
     schema: ProblemAnalysisSchema,
     system: problemBriefSystemPrompt,
-    input: { selected_property: input.property, description: input.description, category_hint: input.category_hint, existing_problem_brief: input.existing_problem_brief, clarification_history: input.clarification_history, new_clarification: input.clarification },
+    input: {
+      selected_property: input.property,
+      description: input.description,
+      selected_issue_type: input.category_hint,
+      category_hint: input.category_hint,
+      existing_problem_brief: existingBrief,
+      clarification_history: input.clarification_history,
+      new_clarification: input.clarification,
+    },
     userContent: [
-      { type: "text", text: JSON.stringify({ selected_property: input.property, description: input.description, category_hint: input.category_hint, existing_problem_brief: input.existing_problem_brief, clarification_history: input.clarification_history, new_clarification: input.clarification }) },
+      {
+        type: "text",
+        text: JSON.stringify({
+          selected_property: input.property,
+          description: input.description,
+          selected_issue_type: input.category_hint,
+          category_hint: input.category_hint,
+          existing_problem_brief: existingBrief,
+          clarification_history: input.clarification_history,
+          new_clarification: input.clarification,
+        }),
+      },
       ...(input.image_data_urls || []).slice(0, 4).map((url) => ({ type: "image_url", image_url: { url } })),
     ],
     });
