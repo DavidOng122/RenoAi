@@ -27,3 +27,13 @@ export function createRenoSupabase(ownerId: string) {
     },
   );
 }
+
+export function createRenoPublicSupabase() {
+  return createClient(
+    required("NEXT_PUBLIC_SUPABASE_URL"),
+    required("NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY"),
+    {
+      auth: { autoRefreshToken: false, detectSessionInUrl: false, persistSession: false },
+    },
+  );
+}
