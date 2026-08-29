@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "daytona:validate-pricing": "node scripts/run-daytona-pricing-validation.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
