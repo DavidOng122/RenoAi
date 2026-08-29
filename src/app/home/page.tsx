@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { Wrench } from "lucide-react";
 import { MobileHeader, MobileBottomNav } from "@/components/MobileShell";
 import { RepairComposer } from "@/features/repair-input/RepairComposer";
 import { localStore } from "@/lib/local-store";
@@ -15,7 +14,7 @@ export default function HomePage() {
     return () => window.removeEventListener("renoai:change", sync);
   }, []);
   return <div className="brief-shell">
-    <div className="home-logo"><span className="brand-mark"><Wrench size={17}/></span>RenoaAI</div>
+    <div className="home-logo"><img src="/logo.png" alt="" width={32} height={32}/>RenoaAI</div>
     <MobileHeader property={property}/>
     <div className="home-hero">
       <h1>What needs fixing？</h1>
