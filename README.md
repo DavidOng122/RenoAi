@@ -31,7 +31,6 @@ npm run dev
 QWEN_API_KEY=sk-your-qwen-key
 QWEN_BASE_URL=https://dashscope-intl.aliyuncs.com/compatible-mode/v1
 QWEN_MODEL=qwen3-vl-flash
-QWEN_REPAIR_MODEL=qwen3-vl-flash
 
 AI_DEMO_MODE=false
 ```
@@ -65,7 +64,7 @@ AI_DEMO_MODE=false
 src/app                 页面与 API routes
 src/features            按 UX flow 拆分的 UI 模块
 src/schemas             Zod 数据边界
-src/server/ai           Qwen 客户端与 prompts
+src/server/ai           Qwen client and prompts
 src/server/pipeline     确认后的并行分析
 src/server/pricing      独立价格引擎
 data/pricing            价格知识库

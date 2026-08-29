@@ -49,9 +49,11 @@ function demoAnalysis(input: Input): ProblemAnalysis {
 }
 
 export async function createProblemAnalysis(input: Input): Promise<ProblemAnalysis> {
-  const analysis = process.env.AI_DEMO_MODE === "true" || !process.env.QWEN_API_KEY
-    ? demoAnalysis(input)
-    : await generateStructured({
+  if (process.env.AI_DEMO_MODE === "true") return demoAnalysis(input);
+  if (!process.env.QWEN_API_KEY) {
+    throw new Error("Qwen is not configured. Set QWEN_API_KEY, or explicitly enable AI_DEMO_MODE.");
+  }
+  const analysis = await generateStructured({
     baseURL: process.env.QWEN_BASE_URL || "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
     apiKey: process.env.QWEN_API_KEY,
     model: process.env.QWEN_MODEL || "qwen3-vl-flash",
@@ -83,7 +85,10 @@ function demoRepair(brief: ProblemBrief): RepairResult {
 }
 
 export async function analyseRepairWithQwen(brief: ProblemBrief): Promise<RepairResult> {
-  if (process.env.AI_DEMO_MODE === "true" || !process.env.QWEN_API_KEY) return demoRepair(brief);
+  if (process.env.AI_DEMO_MODE === "true") return demoRepair(brief);
+  if (!process.env.QWEN_API_KEY) {
+    throw new Error("Qwen is not configured. Set QWEN_API_KEY, or explicitly enable AI_DEMO_MODE.");
+  }
   return generateStructured({
     baseURL: process.env.QWEN_BASE_URL || "https://dashscope-intl.aliyuncs.com/compatible-mode/v1",
     apiKey: process.env.QWEN_API_KEY,
