@@ -4,7 +4,7 @@ export const PropertySchema = z.object({
   id: z.string(),
   user_id: z.string(),
   name: z.string(),
-  home_type: z.enum(["HDB", "Condo", "Landed"]),
+  home_type: z.enum(["HDB", "Condo", "Landed", "Other"]),
   address: z.object({
     postal_code: z.string(),
     address_line: z.string(),
