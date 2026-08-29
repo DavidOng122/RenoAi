@@ -1,0 +1,14 @@
+{
+  "total_raw_records": 348,
+  "total_normalized_jobs": 100,
+  "production_ready_jobs": 51,
+  "needs_review_jobs": 49,
+  "coverage": {
+    "door": 5,
+    "plumbing": 8,
+    "electrical": 14,
+    "wall_ceiling": 2,
+    "aircon": 14,
+    "other": 8
+  }
+}

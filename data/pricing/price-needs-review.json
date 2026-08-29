@@ -1,0 +1,198 @@
+[
+  {
+    "job_code": "DOOR_LOCK_REPLACEMENT",
+    "reason": "Collected prices mix ordinary door lock/knob work with a much higher gate-lock price; scope is not consistent enough for one deterministic range."
+  },
+  {
+    "job_code": "SHOWER_DOOR_HINGE_REPAIR",
+    "reason": "Only one clear specialist market range was collected for glass/shower-door hinges; needs another comparable source or internal jobs."
+  },
+  {
+    "job_code": "SLIDING_DOOR_REPAIR_GENERIC",
+    "reason": "Only a starting price was collected for generic sliding-door repair; roller repair is production-ready separately."
+  },
+  {
+    "job_code": "TOILET_DOOR_REPAIR",
+    "reason": "Only a From price was collected, with no reliable upper bound."
+  },
+  {
+    "job_code": "CONCEALED_PIPE_LEAK_REPAIR",
+    "reason": "Collected data ranges from concealed leak detection to repair and can exceed S$500; diagnosis and repair scope are mixed."
+  },
+  {
+    "job_code": "BOTTLE_TRAP_REPLACEMENT",
+    "reason": "Direct all-in prices and labour-only ranges use different inclusion bases; current data does not support a clean final-payment range."
+  },
+  {
+    "job_code": "FLEXIBLE_HOSE_REPLACEMENT",
+    "reason": "All-in sources provide only fixed/from pricing while the available range is labour-only; upper bound for final payment is uncertain."
+  },
+  {
+    "job_code": "TOILET_SIPHON_REPLACEMENT",
+    "reason": "Collected sources disagree materially, including S$80–150 benchmark, S$150 fixed, and From S$180."
+  },
+  {
+    "job_code": "TOILET_BOWL_REPLACEMENT",
+    "reason": "Supply-and-install, labour-only, and fixture-excluded prices are mixed; collected ranges are too basis-dependent."
+  },
+  {
+    "job_code": "BASIN_INSTALLATION",
+    "reason": "Sources mix supply-and-install pricing with market ranges that exclude the basin unit."
+  },
+  {
+    "job_code": "SINK_INSTALLATION",
+    "reason": "Collected S$120–300 range excludes the sink unit, so it does not represent a reliable homeowner final payment."
+  },
+  {
+    "job_code": "WATER_HEATER_INSTALLATION",
+    "reason": "Collected S$100–500 range is broad and heater type/supply basis is not normalized."
+  },
+  {
+    "job_code": "WATER_HEATER_PIPE_CONNECTION",
+    "reason": "Only a From S$120 price was collected."
+  },
+  {
+    "job_code": "PLUMBER_CALLOUT",
+    "reason": "This is a call-out/minor-repair fee rather than a specific repair job; keep separate from repair pricing."
+  },
+  {
+    "job_code": "CEILING_FAN_REPAIR",
+    "reason": "Collected data mixes a S$60 repair price with S$80–150 installation-or-repair guidance; repair scope is not isolated."
+  },
+  {
+    "job_code": "DB_BOX_REPLACEMENT",
+    "reason": "Collected range S$250–1,200+ is too broad and depends heavily on DB size/components."
+  },
+  {
+    "job_code": "DISTRIBUTION_BOARD_SERVICE",
+    "reason": "One fixed service figure and a broad replacement range refer to different scopes."
+  },
+  {
+    "job_code": "ELCB_INSTALLATION",
+    "reason": "Only one fixed S$72 public price was collected; no market range is available."
+  },
+  {
+    "job_code": "ISOLATOR_INSTALLATION",
+    "reason": "Only one fixed S$160 public price was collected; no market range is available."
+  },
+  {
+    "job_code": "WATER_HEATER_REPAIR",
+    "reason": "Only one fixed S$60 repair price was collected; scope and parts are not sufficiently defined."
+  },
+  {
+    "job_code": "LIGHT_BULB_REPLACEMENT",
+    "reason": "Pricing differs between first item and additional items, but the production schema has no quantity/first-item pricing model."
+  },
+  {
+    "job_code": "POWER_SOCKET_REPAIR",
+    "reason": "The collected low-price record groups light/switch/socket repair together and is not specific enough to isolate socket repair."
+  },
+  {
+    "job_code": "LIGHT_POINT_REPAIR",
+    "reason": "Collected prices are mainly installation/new-point prices rather than a clearly scoped light-point repair."
+  },
+  {
+    "job_code": "CEILING_PATCH",
+    "reason": "No reliable complete min/max price for a small ceiling patch was collected."
+  },
+  {
+    "job_code": "CEILING_WATER_DAMAGE_REPAIR",
+    "reason": "Existing ceiling leakage data is quote-only and scope varies with leak source and damage."
+  },
+  {
+    "job_code": "WALL_REPAINT",
+    "reason": "Only a starting price was collected for wall repainting; no reliable upper bound."
+  },
+  {
+    "job_code": "ROOM_PAINTING",
+    "reason": "Only a starting price was collected; room size and prep work are not normalized."
+  },
+  {
+    "job_code": "CEILING_PAINTING",
+    "reason": "Only a starting price was collected; ceiling area and repair/prep scope are not normalized."
+  },
+  {
+    "job_code": "WALL_SEEPAGE_REPAIR",
+    "reason": "Collected pricing is quote-only because source diagnosis and waterproofing scope vary significantly."
+  },
+  {
+    "job_code": "CEILING_LEAK_REPAIR",
+    "reason": "Collected pricing is quote-only; repair cost depends on the leak source and affected construction."
+  },
+  {
+    "job_code": "CRACK_SEALING",
+    "reason": "Only a From S$250 price was collected and crack type/length is not normalized."
+  },
+  {
+    "job_code": "AIRCON_INSTALLATION",
+    "reason": "Only a From S$350 price was collected; system size, piping and unit supply are not normalized."
+  },
+  {
+    "job_code": "AIRCON_VRV_TROUBLESHOOTING",
+    "reason": "Only one fixed specialist price was collected and VRV is outside the common small-home MVP scope."
+  },
+  {
+    "job_code": "AIRCON_QUARTERLY_SERVICE_PACKAGE",
+    "reason": "Collected values are package/subscription prices and must not be treated as a single repair-job price."
+  },
+  {
+    "job_code": "AIRCON_GAS_TOPUP_GENERIC",
+    "reason": "Refrigerant type materially changes price; use R22, R410A or R32 production records instead."
+  },
+  {
+    "job_code": "BATHROOM_WATERPROOFING",
+    "reason": "Collected prices vary by overlay, standalone hacking, and full renovation; area/scope are not represented in the simple runtime schema."
+  },
+  {
+    "job_code": "BALCONY_WATERPROOFING",
+    "reason": "Only a From S$2,000 price was collected and area/scope are not normalized."
+  },
+  {
+    "job_code": "FLOOR_TILE_REPAIR",
+    "reason": "Only a From S$120 price was collected with no reliable upper bound."
+  },
+  {
+    "job_code": "PARQUET_REPAIR",
+    "reason": "Collected pricing is From/quote-based and depends on room size and damage extent."
+  },
+  {
+    "job_code": "FLOOR_POLISHING",
+    "reason": "Pricing is per square foot; the requested production schema has no quantity/area field, so a flat job range would be misleading."
+  },
+  {
+    "job_code": "PARQUET_VARNISHING",
+    "reason": "Collected values are room/package prices and depend on number of bedrooms and finish type."
+  },
+  {
+    "job_code": "PATCH_DRILL_HOLE",
+    "reason": "Only one fixed S$30 per-hole price was collected; production schema cannot represent quantity-dependent pricing safely."
+  },
+  {
+    "job_code": "FURNITURE_ASSEMBLY",
+    "reason": "Collected prices vary by small/medium item and hourly/package basis; scope is not normalized enough for one range."
+  },
+  {
+    "job_code": "MIRROR_INSTALLATION",
+    "reason": "Collected values are primarily starting/first-item prices; no reliable complete range was established."
+  },
+  {
+    "job_code": "BATHROOM_ACCESSORY_INSTALLATION",
+    "reason": "Collected values are starting/first-item prices and quantity materially changes pricing."
+  },
+  {
+    "job_code": "HDB_LAUNDRY_RACK_INSTALLATION",
+    "reason": "Only a From S$150 price was collected."
+  },
+  {
+    "job_code": "RUBBISH_CHUTE_REPLACEMENT",
+    "reason": "Only a From S$235 price was collected."
+  },
+  {
+    "job_code": "DOOR_WRAP_INSTALLATION",
+    "reason": "Collected values are first/additional-door From prices and the runtime schema cannot express quantity pricing."
+  },
+  {
+    "job_code": "DOOR_VARNISHING",
+    "reason": "Only a From S$350 per-door price was collected."
+  }
+]

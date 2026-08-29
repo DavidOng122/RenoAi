@@ -1,47 +1,927 @@
 [
   {
-    "price_key": "DOOR_ALIGNMENT",
-    "affected_item_terms": ["door", "swing door", "bedroom door"],
-    "problem_terms": ["does not close", "won't close", "cannot close", "rubbing", "scraping", "alignment", "bottom edge"],
+    "job_code": "DOOR_ALIGNMENT",
+    "affected_item": [
+      "door"
+    ],
+    "keywords": [
+      "door does not close",
+      "door cannot close",
+      "door rubbing floor",
+      "bottom edge rubbing",
+      "door misaligned",
+      "door sagging",
+      "door sticking"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "DOOR_HINGE_REPAIR",
+    "affected_item": [
+      "door",
+      "door hinge",
+      "hinge"
+    ],
+    "keywords": [
+      "loose door hinge",
+      "door hinge loose",
+      "squeaky door hinge",
+      "door sagging from hinge",
+      "hinge needs tightening",
+      "door hinge repair"
+    ],
+    "estimated_min_price": 45,
+    "estimated_max_price": 70,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "DOOR_HINGE_REPLACEMENT",
+    "affected_item": [
+      "door",
+      "door hinge",
+      "hinge"
+    ],
+    "keywords": [
+      "broken door hinge",
+      "damaged door hinge",
+      "replace door hinge",
+      "hinge cracked",
+      "hinge cannot hold door",
+      "door hinge replacement"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 80,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "DOOR_HANDLE_REPLACEMENT",
+    "affected_item": [
+      "door",
+      "door handle",
+      "door knob"
+    ],
+    "keywords": [
+      "door handle broken",
+      "door knob broken",
+      "door handle loose",
+      "replace door handle",
+      "door handle damaged",
+      "door knob replacement"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "SLIDING_DOOR_ROLLER_REPAIR",
+    "affected_item": [
+      "sliding door",
+      "door roller"
+    ],
+    "keywords": [
+      "sliding door hard to move",
+      "sliding door stuck",
+      "sliding door roller broken",
+      "sliding door not sliding smoothly",
+      "sliding door difficult to open",
+      "sliding door roller repair"
+    ],
+    "estimated_min_price": 120,
+    "estimated_max_price": 250,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "EXPOSED_PIPE_LEAK_REPAIR",
+    "affected_item": [
+      "pipe",
+      "exposed pipe",
+      "water pipe"
+    ],
+    "keywords": [
+      "exposed pipe leaking",
+      "pipe leak",
+      "pipe leaking water",
+      "water leaking from pipe",
+      "dripping pipe",
+      "visible pipe leak"
+    ],
+    "estimated_min_price": 120,
+    "estimated_max_price": 220,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "TAP_LEAK_REPAIR",
+    "affected_item": [
+      "tap",
+      "faucet"
+    ],
+    "keywords": [
+      "tap leaking",
+      "faucet leaking",
+      "dripping tap",
+      "tap keeps dripping",
+      "water leaking from tap",
+      "leaking faucet"
+    ],
+    "estimated_min_price": 60,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "TAP_REPLACEMENT",
+    "affected_item": [
+      "tap",
+      "faucet"
+    ],
+    "keywords": [
+      "replace tap",
+      "replace faucet",
+      "tap broken",
+      "faucet broken",
+      "new tap replacement",
+      "tap cannot be repaired"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "SINK_BLOCKAGE_CLEARING",
+    "affected_item": [
+      "sink",
+      "kitchen sink",
+      "sink drain"
+    ],
+    "keywords": [
+      "sink blocked",
+      "sink clogged",
+      "kitchen sink clogged",
+      "sink draining slowly",
+      "water not draining from sink",
+      "sink choke"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "FLOOR_TRAP_BLOCKAGE_CLEARING",
+    "affected_item": [
+      "floor trap",
+      "drain",
+      "floor drain"
+    ],
+    "keywords": [
+      "floor trap blocked",
+      "floor drain clogged",
+      "floor trap choke",
+      "water not draining",
+      "bathroom drain blocked",
+      "slow floor drain"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "TOILET_CLOG_CLEARING",
+    "affected_item": [
+      "toilet",
+      "toilet bowl",
+      "wc"
+    ],
+    "keywords": [
+      "toilet clogged",
+      "toilet bowl choke",
+      "toilet blocked",
+      "toilet not flushing down",
+      "water rising in toilet",
+      "toilet choke"
+    ],
+    "estimated_min_price": 120,
+    "estimated_max_price": 180,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "TOILET_FLUSH_REPAIR",
+    "affected_item": [
+      "toilet",
+      "toilet flush",
+      "flush system"
+    ],
+    "keywords": [
+      "toilet flush not working",
+      "flush system broken",
+      "toilet cannot flush",
+      "weak toilet flush",
+      "flush button not working",
+      "toilet keeps running"
+    ],
+    "estimated_min_price": 130,
+    "estimated_max_price": 180,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "SHOWER_SET_REPLACEMENT",
+    "affected_item": [
+      "shower",
+      "shower set",
+      "shower head"
+    ],
+    "keywords": [
+      "replace shower set",
+      "shower set broken",
+      "shower head replacement",
+      "shower hose broken",
+      "new shower set",
+      "shower fitting damaged"
+    ],
+    "estimated_min_price": 120,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "POWER_SOCKET_REPLACEMENT",
+    "affected_item": [
+      "power socket",
+      "socket",
+      "electrical outlet",
+      "power point"
+    ],
+    "keywords": [
+      "power socket not working",
+      "socket faulty",
+      "socket loose",
+      "power point broken",
+      "burnt socket",
+      "replace power socket",
+      "outlet damaged"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 90,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "LIGHT_SWITCH_REPLACEMENT",
+    "affected_item": [
+      "light switch",
+      "switch",
+      "wall switch"
+    ],
+    "keywords": [
+      "light switch not working",
+      "switch faulty",
+      "switch broken",
+      "light switch loose",
+      "switch stuck",
+      "replace light switch"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 80,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "LIGHT_BASIC_INSTALLATION",
+    "affected_item": [
+      "light",
+      "light fitting",
+      "lighting"
+    ],
+    "keywords": [
+      "install light",
+      "replace light fitting",
+      "change ceiling light",
+      "install basic light",
+      "light fitting replacement",
+      "replace existing light"
+    ],
+    "estimated_min_price": 40,
+    "estimated_max_price": 60,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "DOWNLIGHT_REPLACEMENT",
+    "affected_item": [
+      "downlight",
+      "ceiling light"
+    ],
+    "keywords": [
+      "downlight not working",
+      "replace downlight",
+      "downlight broken",
+      "change downlight",
+      "install downlight",
+      "ceiling downlight replacement"
+    ],
+    "estimated_min_price": 70,
+    "estimated_max_price": 105,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "CEILING_LIGHT_REPLACEMENT",
+    "affected_item": [
+      "ceiling light",
+      "light fitting",
+      "light"
+    ],
+    "keywords": [
+      "ceiling light not working",
+      "replace ceiling light",
+      "change ceiling light fitting",
+      "ceiling light broken",
+      "install ceiling light",
+      "light fitting replacement"
+    ],
+    "estimated_min_price": 90,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "HANGING_LIGHT_INSTALLATION",
+    "affected_item": [
+      "hanging light",
+      "pendant light",
+      "decorative light"
+    ],
+    "keywords": [
+      "install hanging light",
+      "install pendant light",
+      "replace hanging light",
+      "install decorative light",
+      "pendant light installation"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 90,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "WALL_FAN_INSTALLATION",
+    "affected_item": [
+      "wall fan",
+      "fan"
+    ],
+    "keywords": [
+      "install wall fan",
+      "replace wall fan",
+      "wall fan installation",
+      "mount wall fan",
+      "change wall fan"
+    ],
+    "estimated_min_price": 65,
+    "estimated_max_price": 70,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "CEILING_FAN_INSTALLATION",
+    "affected_item": [
+      "ceiling fan",
+      "fan"
+    ],
+    "keywords": [
+      "install ceiling fan",
+      "replace ceiling fan",
+      "ceiling fan installation",
+      "mount ceiling fan",
+      "change ceiling fan"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "POWER_TRIP_TROUBLESHOOTING",
+    "affected_item": [
+      "electrical system",
+      "power supply",
+      "circuit breaker",
+      "mcb"
+    ],
+    "keywords": [
+      "power keeps tripping",
+      "electricity keeps tripping",
+      "mcb keeps tripping",
+      "power trip",
+      "circuit breaker trips",
+      "house power trip"
+    ],
+    "estimated_min_price": 60,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "HEATER_SWITCH_REPLACEMENT",
+    "affected_item": [
+      "heater switch",
+      "water heater switch",
+      "switch"
+    ],
+    "keywords": [
+      "heater switch not working",
+      "water heater switch faulty",
+      "heater switch broken",
+      "replace heater switch",
+      "heater switch burnt"
+    ],
+    "estimated_min_price": 45,
+    "estimated_max_price": 100,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "ELECTRICAL_TROUBLESHOOTING_VISIT",
+    "affected_item": [
+      "electrical system",
+      "power supply",
+      "wiring"
+    ],
+    "keywords": [
+      "electrical problem unknown",
+      "electrical fault",
+      "no power unknown cause",
+      "electrician troubleshooting",
+      "electrical inspection",
+      "need electrician to check"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 80,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "NEW_POWER_POINT_INSTALLATION",
+    "affected_item": [
+      "power point",
+      "power socket",
+      "electrical outlet"
+    ],
+    "keywords": [
+      "install new power point",
+      "add power socket",
+      "new electrical outlet",
+      "add new socket",
+      "install new socket point",
+      "new power outlet"
+    ],
     "estimated_min_price": 80,
     "estimated_max_price": 180,
-    "currency": "SGD",
-    "source": "internal + Singapore market benchmark"
+    "currency": "SGD"
   },
   {
-    "price_key": "PIPE_LEAK_REPAIR",
-    "affected_item_terms": ["pipe", "tap", "faucet", "sink"],
-    "problem_terms": ["leak", "leaking", "water leakage", "dripping"],
-    "estimated_min_price": 120,
-    "estimated_max_price": 280,
-    "currency": "SGD",
-    "source": "Singapore market benchmark"
+    "job_code": "DIMMER_SWITCH_INSTALLATION",
+    "affected_item": [
+      "dimmer switch",
+      "light switch"
+    ],
+    "keywords": [
+      "install dimmer switch",
+      "replace dimmer switch",
+      "add dimmer",
+      "dimmer switch installation"
+    ],
+    "estimated_min_price": 90,
+    "estimated_max_price": 90,
+    "currency": "SGD"
   },
   {
-    "price_key": "POWER_SOCKET_REPAIR",
-    "affected_item_terms": ["socket", "power point", "outlet", "switch"],
-    "problem_terms": ["not working", "no power", "sparking", "loose", "burnt"],
-    "estimated_min_price": 60,
-    "estimated_max_price": 160,
-    "currency": "SGD",
-    "source": "Singapore market benchmark"
+    "job_code": "DOORBELL_INSTALLATION",
+    "affected_item": [
+      "doorbell"
+    ],
+    "keywords": [
+      "install doorbell",
+      "replace doorbell",
+      "doorbell installation",
+      "new doorbell",
+      "doorbell not working replace"
+    ],
+    "estimated_min_price": 90,
+    "estimated_max_price": 90,
+    "currency": "SGD"
   },
   {
-    "price_key": "WALL_PATCH_PAINT",
-    "affected_item_terms": ["wall", "ceiling", "plaster", "paint"],
-    "problem_terms": ["crack", "peeling", "hole", "stain", "patch"],
-    "estimated_min_price": 150,
-    "estimated_max_price": 450,
-    "currency": "SGD",
-    "source": "Singapore market benchmark"
-  },
-  {
-    "price_key": "AIRCON_BASIC_REPAIR",
-    "affected_item_terms": ["aircon", "air conditioner", "ac unit"],
-    "problem_terms": ["not cold", "leaking", "noisy", "water", "weak airflow"],
+    "job_code": "WALL_CRACK_PATCH",
+    "affected_item": [
+      "wall",
+      "interior wall"
+    ],
+    "keywords": [
+      "wall crack",
+      "hairline crack",
+      "small crack in wall",
+      "patch wall crack",
+      "cracked wall surface",
+      "repair wall crack"
+    ],
     "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "WALL_HOLE_PATCH",
+    "affected_item": [
+      "wall",
+      "interior wall"
+    ],
+    "keywords": [
+      "hole in wall",
+      "small wall hole",
+      "patch wall hole",
+      "drill hole in wall",
+      "wall damaged by screw",
+      "repair small wall hole"
+    ],
+    "estimated_min_price": 60,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_GENERAL_SERVICING",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "fan coil"
+    ],
+    "keywords": [
+      "aircon servicing",
+      "air conditioner servicing",
+      "general aircon service",
+      "clean aircon",
+      "routine aircon maintenance",
+      "aircon normal servicing"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 80,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_DIAGNOSTIC",
+    "affected_item": [
+      "aircon",
+      "air conditioner"
+    ],
+    "keywords": [
+      "aircon problem unknown",
+      "aircon troubleshooting",
+      "aircon diagnostic",
+      "aircon fault",
+      "aircon not working unknown cause",
+      "check aircon problem"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 80,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_DRAIN_LINE_CLEARING",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "drain pipe"
+    ],
+    "keywords": [
+      "aircon drain blocked",
+      "aircon drain pipe clogged",
+      "aircon dripping water",
+      "blocked aircon drainage",
+      "aircon drain line clearing",
+      "aircon drain choke"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_NOT_COLD_TROUBLESHOOTING",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "fan coil"
+    ],
+    "keywords": [
+      "aircon not cold",
+      "air conditioner not cooling",
+      "aircon weak cooling",
+      "aircon not cooling enough",
+      "aircon blowing warm air",
+      "poor aircon cooling"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 180,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_WATER_LEAK_TROUBLESHOOTING",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "fan coil"
+    ],
+    "keywords": [
+      "aircon leaking water",
+      "water dripping from aircon",
+      "air conditioner leaking",
+      "aircon water leak",
+      "fan coil dripping water",
+      "indoor aircon leaking"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 180,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_CHEMICAL_WASH",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "fan coil"
+    ],
+    "keywords": [
+      "aircon chemical wash",
+      "chemical clean aircon",
+      "aircon deep cleaning",
+      "fan coil chemical wash",
+      "air conditioner chemical cleaning"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_CHEMICAL_OVERHAUL",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "fan coil"
+    ],
+    "keywords": [
+      "aircon chemical overhaul",
+      "aircon full chemical cleaning",
+      "fan coil chemical overhaul",
+      "air conditioner chemical overhaul"
+    ],
+    "estimated_min_price": 150,
+    "estimated_max_price": 240,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_GAS_TOPUP_R22",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "refrigerant"
+    ],
+    "keywords": [
+      "aircon gas top up r22",
+      "r22 refrigerant top up",
+      "aircon low gas r22",
+      "top up r22 gas",
+      "r22 aircon gas"
+    ],
+    "estimated_min_price": 90,
+    "estimated_max_price": 130,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_GAS_TOPUP_R410A",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "refrigerant"
+    ],
+    "keywords": [
+      "aircon gas top up r410a",
+      "r410a refrigerant top up",
+      "aircon low gas r410a",
+      "top up r410a gas",
+      "r410a aircon gas"
+    ],
+    "estimated_min_price": 120,
+    "estimated_max_price": 165,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_GAS_TOPUP_R32",
+    "affected_item": [
+      "aircon",
+      "air conditioner",
+      "refrigerant"
+    ],
+    "keywords": [
+      "aircon gas top up r32",
+      "r32 refrigerant top up",
+      "aircon low gas r32",
+      "top up r32 gas",
+      "r32 aircon gas"
+    ],
+    "estimated_min_price": 130,
+    "estimated_max_price": 180,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_CONDENSER_NORMAL_CLEANING",
+    "affected_item": [
+      "aircon condenser",
+      "condenser"
+    ],
+    "keywords": [
+      "clean aircon condenser",
+      "condenser normal cleaning",
+      "outdoor aircon unit cleaning",
+      "clean aircon outdoor unit"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 80,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_CONDENSER_CHEMICAL_CLEANING",
+    "affected_item": [
+      "aircon condenser",
+      "condenser"
+    ],
+    "keywords": [
+      "condenser chemical cleaning",
+      "chemical clean aircon condenser",
+      "aircon outdoor unit chemical cleaning"
+    ],
+    "estimated_min_price": 100,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_CONDENSER_DRY_CLEANING",
+    "affected_item": [
+      "aircon condenser",
+      "condenser"
+    ],
+    "keywords": [
+      "condenser dry cleaning",
+      "dry clean aircon condenser",
+      "aircon outdoor unit dry cleaning"
+    ],
+    "estimated_min_price": 60,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "AIRCON_CONDENSER_STEAM_CLEANING",
+    "affected_item": [
+      "aircon condenser",
+      "condenser"
+    ],
+    "keywords": [
+      "condenser steam cleaning",
+      "steam clean aircon condenser",
+      "aircon outdoor unit steam cleaning"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "CABINET_HINGE_REPAIR",
+    "affected_item": [
+      "cabinet",
+      "cupboard",
+      "cabinet hinge"
+    ],
+    "keywords": [
+      "cabinet hinge loose",
+      "cupboard hinge broken",
+      "cabinet door sagging",
+      "cabinet hinge repair",
+      "cabinet door not closing",
+      "cupboard hinge loose"
+    ],
+    "estimated_min_price": 60,
+    "estimated_max_price": 120,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "DRAWER_TRACK_REPAIR",
+    "affected_item": [
+      "drawer",
+      "drawer track",
+      "drawer runner"
+    ],
+    "keywords": [
+      "drawer stuck",
+      "drawer not sliding",
+      "drawer track broken",
+      "drawer runner damaged",
+      "drawer hard to open",
+      "drawer track repair"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 160,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "WINDOW_HANDLE_LATCH_REPAIR",
+    "affected_item": [
+      "window",
+      "window handle",
+      "window latch"
+    ],
+    "keywords": [
+      "window handle broken",
+      "window latch broken",
+      "window cannot lock",
+      "window handle loose",
+      "window latch repair",
+      "window handle repair"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 160,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "WINDOW_ROLLER_HINGE_REPAIR",
+    "affected_item": [
+      "window",
+      "window roller",
+      "window hinge"
+    ],
+    "keywords": [
+      "window hard to open",
+      "window roller broken",
+      "window hinge damaged",
+      "window not sliding smoothly",
+      "window roller repair",
+      "window hinge repair"
+    ],
+    "estimated_min_price": 120,
     "estimated_max_price": 250,
-    "currency": "SGD",
-    "source": "Singapore market benchmark"
+    "currency": "SGD"
+  },
+  {
+    "job_code": "WALL_SHELF_INSTALLATION",
+    "affected_item": [
+      "wall shelf",
+      "shelf"
+    ],
+    "keywords": [
+      "install wall shelf",
+      "mount shelf on wall",
+      "wall shelf installation",
+      "hang shelf",
+      "fix shelf to wall"
+    ],
+    "estimated_min_price": 50,
+    "estimated_max_price": 100,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "TV_BRACKET_INSTALLATION",
+    "affected_item": [
+      "tv bracket",
+      "tv mount"
+    ],
+    "keywords": [
+      "install tv bracket",
+      "mount tv on wall",
+      "tv wall mount installation",
+      "install tv mount",
+      "hang tv on wall"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 150,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "CURTAIN_ROD_INSTALLATION",
+    "affected_item": [
+      "curtain rod",
+      "curtain pole"
+    ],
+    "keywords": [
+      "install curtain rod",
+      "mount curtain rod",
+      "curtain pole installation",
+      "replace curtain rod",
+      "fix curtain rod to wall"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 180,
+    "currency": "SGD"
+  },
+  {
+    "job_code": "SILICONE_SEALANT_TOUCHUP",
+    "affected_item": [
+      "silicone sealant",
+      "bathroom sealant",
+      "sealant"
+    ],
+    "keywords": [
+      "silicone sealant damaged",
+      "bathroom silicone mouldy",
+      "replace silicone sealant",
+      "reseal bathroom",
+      "sealant peeling",
+      "bathroom sealant touch up"
+    ],
+    "estimated_min_price": 80,
+    "estimated_max_price": 180,
+    "currency": "SGD"
   }
 ]
