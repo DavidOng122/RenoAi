@@ -56,7 +56,7 @@ function RequestCard({ item, onDelete }: { item: RepairRequest; onDelete: (item:
 
 export function RequestList() {
   const [items, setItems] = useState<RepairRequest[]>([]);
-  useEffect(() => { const sync = () => setItems(localStore.requests()); sync(); window.addEventListener("renoai:change", sync); return () => window.removeEventListener("renoai:change", sync); }, []);
+  useEffect(() => { const sync = () => setItems(localStore.requests()); sync(); void localStore.syncFromCloud(); window.addEventListener("renoai:change", sync); return () => window.removeEventListener("renoai:change", sync); }, []);
 
   function deleteRequest(item: RepairRequest) {
     const title = item.analysis?.problem_brief.affected_item || item.category_hint || "this request";

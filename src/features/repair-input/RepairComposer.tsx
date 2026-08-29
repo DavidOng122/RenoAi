@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { ArrowUp, BrickWall, DoorClosed, Droplet, Grid2X2, LoaderCircle, Mic, Plus, Square, Video, X, Zap } from "lucide-react";
 import { localStore } from "@/lib/local-store";
+import { getSupabaseBrowser } from "@/lib/supabase-browser";
 import { cn, newId } from "@/lib/utils";
 import type { MediaItem } from "@/schemas/project-brief.schema";
 
@@ -58,22 +59,55 @@ export function RepairComposer() {
     return canvas.toDataURL("image/jpeg", .76);
   }
 
+  async function uploadEvidence(requestId: string, file: File, index: number): Promise<MediaItem> {
+    const prepared = await fetch("/api/uploads", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ requestId, fileName: file.name, contentType: file.type }),
+    });
+    if (!prepared.ok) throw new Error("Unable to prepare upload");
+    const upload = await prepared.json() as { bucket: string; path: string; token: string };
+    const { error } = await getSupabaseBrowser().storage
+      .from(upload.bucket)
+      .uploadToSignedUrl(upload.path, upload.token, file, { contentType: file.type, cacheControl: "3600" });
+    if (error) throw error;
+
+    const signed = await fetch("/api/uploads", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ path: upload.path }),
+    });
+    if (!signed.ok) throw new Error("Unable to create media URL");
+    const { url } = await signed.json() as { url: string };
+    return {
+      id: `${requestId}_media_${index}`,
+      type: file.type.startsWith("video") ? "video" : "photo",
+      storage_url: url,
+      storage_path: upload.path,
+    };
+  }
+
   async function submit() {
     if (!description.trim() || busy) return;
     setBusy(true);
     const id = newId("request");
-    const evidence = files.reduce<{ photos: MediaItem[]; videos: MediaItem[] }>((acc, file, index) => {
-      const item: MediaItem = { id: `${id}_media_${index}`, type: file.type.startsWith("video") ? "video" : "photo", storage_url: URL.createObjectURL(file) };
-      acc[item.type === "photo" ? "photos" : "videos"].push(item); return acc;
-    }, { photos: [], videos: [] });
     try {
-      const image_data_urls = await Promise.all(files.filter((file) => file.type.startsWith("image")).slice(0, 4).map(imageDataUrl));
+      const oversized = files.find((file) => file.size > 25 * 1024 * 1024);
+      if (oversized) throw new Error(`${oversized.name} is larger than 25 MB`);
+      const [uploadedMedia, image_data_urls] = await Promise.all([
+        Promise.all(files.map((file, index) => uploadEvidence(id, file, index))),
+        Promise.all(files.filter((file) => file.type.startsWith("image")).slice(0, 4).map(imageDataUrl)),
+      ]);
+      const evidence = uploadedMedia.reduce<{ photos: MediaItem[]; videos: MediaItem[] }>((acc, item) => {
+        acc[item.type === "photo" ? "photos" : "videos"].push(item);
+        return acc;
+      }, { photos: [], videos: [] });
       sessionStorage.setItem(`renoai.analysis-images.${id}`, JSON.stringify(image_data_urls));
       localStore.saveRequest({ id, property_id: localStore.selectedProperty().id, description: description.trim(), category_hint: category, status: "analysing", created_at: new Date().toISOString(), evidence });
       router.push(`/repair/${id}/processing`);
-    } catch {
+    } catch (error) {
       setBusy(false);
-      alert("We couldn't prepare the images for analysis. Please try again.");
+      alert(error instanceof Error ? error.message : "We couldn't upload the evidence. Please try again.");
     }
   }
 

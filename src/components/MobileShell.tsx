@@ -36,6 +36,7 @@ export function MobileHeader({ variant = "default", user }: { variant?: "default
       setProperties(localStore.properties());
     };
     sync();
+    void localStore.syncFromCloud();
     window.addEventListener("renoai:change", sync);
     return () => window.removeEventListener("renoai:change", sync);
   }, []);
