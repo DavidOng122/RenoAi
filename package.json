@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "next lint",
     "daytona:validate-pricing": "node scripts/run-daytona-pricing-validation.mjs"
+    "generate:price-migration": "node scripts/generate-price-migration.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.112.4",
