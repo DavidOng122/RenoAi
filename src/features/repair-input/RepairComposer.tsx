@@ -2,17 +2,22 @@
 
 import { useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { ArrowUp, Camera, LoaderCircle, Mic, Video } from "lucide-react";
+import { BrickWall, DoorClosed, Droplet, Grid2X2, LoaderCircle, Mic, Plus, Zap } from "lucide-react";
 import { localStore } from "@/lib/local-store";
 import { cn, newId } from "@/lib/utils";
 import type { MediaItem } from "@/schemas/project-brief.schema";
 
-const categories = ["Door", "Water leak", "Electrical", "Wall & ceiling", "Air-con", "Other"];
+const categories = [
+  { label: "Water", sub: "Leak", icon: Droplet, tint: "#3b82f6" },
+  { label: "Electrical", sub: "Power issue", icon: Zap, tint: "#f59e0b" },
+  { label: "Door / Cabinet", sub: "Woodwork", icon: DoorClosed, tint: "#1e2939" },
+  { label: "Wall / Ceiling", sub: "Crack, stain", icon: BrickWall, tint: "#0f766e" },
+  { label: "Tiles / Floor", sub: "Tiles, floor", icon: Grid2X2, tint: "#6b7280" },
+];
 
 export function RepairComposer() {
   const router = useRouter();
   const fileRef = useRef<HTMLInputElement>(null);
-  const videoRef = useRef<HTMLInputElement>(null);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState<string>();
   const [files, setFiles] = useState<File[]>([]);
@@ -55,20 +60,28 @@ export function RepairComposer() {
   }
 
   return <>
-    <div className="composer">
-      <textarea aria-label="Describe the repair" placeholder="My bedroom door is scraping the floor and won't close properly..." value={description} onChange={(e) => setDescription(e.target.value)} />
-      {files.length > 0 && <div className="muted" style={{fontSize:13, marginBottom:12}}>{files.length} evidence file{files.length > 1 ? "s" : ""} attached</div>}
-      <div className="composer-footer">
-        <div className="tool-row">
-          <button className="icon-btn" aria-label="Add photos" onClick={() => fileRef.current?.click()}><Camera size={19}/></button>
-          <button className="icon-btn" aria-label="Add video" onClick={() => videoRef.current?.click()}><Video size={19}/></button>
-          <button className="icon-btn" aria-label="Voice input" title="Voice input coming next"><Mic size={19}/></button>
-          <input ref={fileRef} hidden type="file" accept="image/*" multiple onChange={(e) => selectFiles(e.target.files)} />
-          <input ref={videoRef} hidden type="file" accept="video/*" multiple onChange={(e) => selectFiles(e.target.files)} />
-        </div>
-        <button className="primary-btn" disabled={!description.trim() || busy} onClick={submit}>{busy ? <LoaderCircle className="spin" size={18}/> : <ArrowUp size={18}/>} {busy ? "Understanding" : "Create brief"}</button>
+    <div className="composer-card">
+      <div className="composer-photos">
+        <button className="composer-add" aria-label="Add photos" onClick={() => fileRef.current?.click()}><Plus size={25}/><span>Add</span></button>
+        {files.filter((f) => f.type.startsWith("image")).map((file, i) => <img className="composer-thumb" key={i} src={URL.createObjectURL(file)} alt=""/>)}
+        <input ref={fileRef} hidden type="file" accept="image/*" multiple onChange={(e) => selectFiles(e.target.files)} />
+      </div>
+      <textarea className="composer-textarea" aria-label="Describe the repair" placeholder="My bedroom door is scraping the floor and won't close properly..." value={description} onChange={(e) => setDescription(e.target.value)} />
+      <div className="composer-toolbar">
+        <button className="composer-icon-btn" aria-label="Add attachment" onClick={() => fileRef.current?.click()}><Plus size={18}/></button>
+        <button className="composer-mic-btn" disabled={!description.trim() || busy} onClick={submit} aria-label="Create brief">{busy ? <LoaderCircle className="spin" size={17}/> : <Mic size={17}/>}</button>
       </div>
     </div>
-    <div className="category-section"><div className="section-label">Optional issue hint</div><div className="categories">{categories.map((item) => <button key={item} className={cn("category", category === item && "active")} onClick={() => setCategory(category === item ? undefined : item)}>{item}</button>)}</div></div>
+    <div className="issue-section">
+      <div className="issue-label">Choose likely issue</div>
+      <div className="issue-row">
+        {categories.map(({ label, sub, icon: Icon, tint }) => (
+          <button key={label} className={cn("issue-chip", category === label && "active")} onClick={() => setCategory(category === label ? undefined : label)}>
+            <Icon size={22} color={tint} strokeWidth={1.75}/>
+            <div><p className="issue-chip-title">{label}</p><p className="issue-chip-sub">{sub}</p></div>
+          </button>
+        ))}
+      </div>
+    </div>
   </>;
 }

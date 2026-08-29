@@ -1,10 +1,27 @@
-import { AppShell } from "@/components/AppShell";
+"use client";
+
+import { useEffect, useState } from "react";
+import { Wrench } from "lucide-react";
+import { MobileHeader, MobileBottomNav } from "@/components/MobileShell";
 import { RepairComposer } from "@/features/repair-input/RepairComposer";
+import { localStore } from "@/lib/local-store";
+import type { Property } from "@/schemas/property.schema";
 
 export default function HomePage() {
-  return <AppShell>
-    <section className="hero"><div><div className="eyebrow">Home repair, made clear</div><h1>What needs fixing?</h1></div><p className="hero-copy">Show us the issue and describe what you notice. We’ll turn it into a clear, contractor-ready brief with a grounded price range.</p></section>
-    <RepairComposer />
-    <section className="feature-strip" aria-label="How it works"><div className="feature"><span className="feature-number">01</span><strong>Describe it in your own words</strong></div><div className="feature"><span className="feature-number">02</span><strong>Review what the AI understood</strong></div><div className="feature"><span className="feature-number">03</span><strong>Get a repair plan and fair range</strong></div></section>
-  </AppShell>;
+  const [property, setProperty] = useState<Property>();
+  useEffect(() => {
+    const sync = () => setProperty(localStore.selectedProperty());
+    sync(); window.addEventListener("renoai:change", sync);
+    return () => window.removeEventListener("renoai:change", sync);
+  }, []);
+  return <div className="brief-shell">
+    <div className="home-logo"><span className="brand-mark"><Wrench size={17}/></span>RenoaAI</div>
+    <MobileHeader property={property}/>
+    <div className="home-hero">
+      <h1>What needs fixing？</h1>
+      <p>Add a photo and tell us<br/>what happend</p>
+    </div>
+    <RepairComposer/>
+    <MobileBottomNav/>
+  </div>;
 }
