@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ArrowRight } from "lucide-react";
 import { localStore, type RepairRequest } from "@/lib/local-store";
 
 function route(item: RepairRequest) {
@@ -12,14 +11,34 @@ function route(item: RepairRequest) {
   return `/repair/${item.id}/clarify`;
 }
 
-function Cards({ items }: { items: RepairRequest[] }) {
-  if (!items.length) return <div className="empty">Nothing here yet.</div>;
-  return <div className="stack">{items.map((item) => <Link className="request-card" href={route(item)} key={item.id}><div><h3>{item.analysis?.problem_brief.affected_item || item.category_hint || "New repair"}</h3><div className="muted">{item.analysis?.problem_brief.location || item.description.slice(0, 60)}</div></div><div style={{display:"flex",alignItems:"center",gap:12}}><span className="badge">{item.status.replace("_", " ")}</span><ArrowRight size={18}/></div></Link>)}</div>;
+function RequestCard({ item }: { item: RepairRequest }) {
+  const brief = item.analysis?.problem_brief;
+  const title = brief ? `${brief.location}  ${brief.affected_item.toLowerCase()}` : item.category_hint || item.description.slice(0, 40) || "New repair";
+  const locationLine = "HDB . Tampines";
+  const photo = item.evidence.photos[0];
+  const pricing = item.project?.pricing;
+  const duration = item.project?.repair.estimated_duration;
+  return (
+    <Link className="requests-card" href={route(item)}>
+      {photo ? <img className="requests-card-photo" src={photo.thumbnail_url || photo.storage_url} alt=""/> : <div className="requests-card-photo requests-card-photo-placeholder"/>}
+      <div className="requests-card-body">
+        <div>
+          <p className="requests-card-title">{title}</p>
+          <p className="requests-card-location">{locationLine}</p>
+        </div>
+        <div className="requests-card-meta">
+          {pricing?.available
+            ? <><span>S${pricing.estimated_min_price} - {pricing.estimated_max_price}</span><span>{duration}</span></>
+            : <span className="badge">{item.status.replace("_", " ")}</span>}
+        </div>
+      </div>
+    </Link>
+  );
 }
 
 export function RequestList() {
   const [items, setItems] = useState<RepairRequest[]>([]);
   useEffect(() => { const sync = () => setItems(localStore.requests()); sync(); window.addEventListener("renoai:change", sync); return () => window.removeEventListener("renoai:change", sync); }, []);
-  const active = items.filter((i) => i.status !== "ready"); const ready = items.filter((i) => i.status === "ready");
-  return <div className="stack" style={{gap:34}}><section><div className="section-label">ACTIVE · {active.length}</div><Cards items={active}/></section><section><div className="section-label">READY · {ready.length}</div><Cards items={ready}/></section></div>;
+  if (!items.length) return <div className="empty">Nothing here yet.</div>;
+  return <div className="requests-list">{items.map((item) => <RequestCard item={item} key={item.id}/>)}</div>;
 }

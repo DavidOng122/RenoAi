@@ -1,8 +1,23 @@
-import Link from "next/link";
-import { Plus } from "lucide-react";
-import { AppShell } from "@/components/AppShell";
+"use client";
+
+import { useEffect, useState } from "react";
+import { MobileHeader, MobileBottomNav } from "@/components/MobileShell";
 import { RequestList } from "@/features/requests/RequestList";
+import { localStore } from "@/lib/local-store";
+import type { Property } from "@/schemas/property.schema";
 
 export default function RequestsPage() {
-  return <AppShell><div className="page-head"><div><div className="eyebrow">Repair requests</div><h1>Everything in one place.</h1></div><Link className="primary-btn" href="/home"><Plus size={17}/> New request</Link></div><RequestList/></AppShell>;
+  const [property, setProperty] = useState<Property>();
+  useEffect(() => {
+    const sync = () => setProperty(localStore.selectedProperty());
+    sync(); window.addEventListener("renoai:change", sync);
+    return () => window.removeEventListener("renoai:change", sync);
+  }, []);
+  return <div className="brief-shell">
+    <MobileHeader property={property}/>
+    <h1 className="requests-title">Request</h1>
+    <p className="requests-subtitle">Your saved repair brief</p>
+    <RequestList/>
+    <MobileBottomNav/>
+  </div>;
 }

@@ -89,6 +89,16 @@ h1 { font-size: clamp(42px, 6vw, 76px); line-height: .98; max-width: 770px; }
 .brief-nav-item.active { color: #000; }
 .brief-nav-underline { width: 29px; height: 0; border-top: 1px solid #000; margin-top: 2px; }
 
+.requests-title { font: 590 32px/normal "SF Pro Display", "Manrope", sans-serif; letter-spacing: -.32px; color: #000; margin: 0; }
+.requests-subtitle { font-size: 16px; color: #616161; letter-spacing: -.16px; margin: 4px 0 26px; }
+.requests-list { display: flex; flex-direction: column; gap: 14px; }
+.requests-card { display: flex; gap: 21px; align-items: center; border: 1px solid #e4e1e1; border-radius: 14px; padding: 12px; }
+.requests-card-photo, .requests-card-photo-placeholder { width: 136px; height: 136px; border-radius: 14px; background: #d9d9d9; object-fit: cover; flex-shrink: 0; border: 0; }
+.requests-card-body { display: flex; flex-direction: column; justify-content: space-between; gap: 18px; flex: 1; min-width: 0; }
+.requests-card-title { font-weight: 700; font-size: 15px; letter-spacing: -.15px; color: #000; margin: 0; text-transform: capitalize; }
+.requests-card-location { font-size: 13px; color: #777; letter-spacing: -.13px; margin: 2px 0 0; }
+.requests-card-meta { display: flex; gap: 17px; align-items: center; font-size: 12px; color: #000; letter-spacing: -.12px; }
+
 .brief-page { max-width: 402px; margin: 0 auto; }
 .brief-page-head { margin: 8px 0 22px; }
 .brief-page-head h1 { font-size: 26px; line-height: 1.15; }
