@@ -18,9 +18,11 @@ export const config = {
     "/home/:path*",
     "/onboarding/:path*",
     "/requests/:path*",
+    "/settings/:path*",
     "/repair/:path*",
     "/api/analyse",
     "/api/clarify",
     "/api/problem-brief",
+    "/api/price",
   ],
 };

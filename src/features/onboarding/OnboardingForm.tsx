@@ -33,7 +33,7 @@ function Stepper({ step }: { step: 1 | 2 }) {
   );
 }
 
-export function OnboardingForm() {
+export function OnboardingForm({ isAddingProperty = false }: { isAddingProperty?: boolean }) {
   const router = useRouter();
   const [existing, setExisting] = useState<Property>();
   const [step, setStep] = useState<1 | 2>(1);
@@ -41,19 +41,22 @@ export function OnboardingForm() {
   const [area, setArea] = useState("");
 
   useEffect(() => {
-    const property = localStore.properties()[0];
+    if (isAddingProperty) return;
+    const property = localStore.selectedProperty();
+    if (!localStore.properties().some((item) => item.id === property.id)) return;
     if (!property) return;
     setExisting(property);
     setHomeType(property.home_type);
     setArea(property.address.address_line);
-  }, []);
+  }, [isAddingProperty]);
 
   function submit(e: React.FormEvent) {
     e.preventDefault();
+    const propertyCount = localStore.properties().length;
     localStore.saveProperty({
       id: existing?.id || newId("property"),
       user_id: "user_local",
-      name: existing?.name || "My Home",
+      name: existing?.name || (propertyCount ? `My Home ${propertyCount + 1}` : "My Home"),
       home_type: homeType,
       address: {
         postal_code: existing?.address.postal_code || "",
@@ -69,7 +72,19 @@ export function OnboardingForm() {
     return (
       <main className="onboarding-page" data-node-id="107:1265">
         <form className="onboarding-details" onSubmit={submit} data-node-id="107:1266">
-          <Stepper step={2} />
+          <div className="onboarding-navigation">
+            <button
+              className="onboarding-back"
+              type="button"
+              aria-label="Back to home type"
+              onClick={() => setStep(1)}
+            >
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m15 18-6-6 6-6" />
+              </svg>
+            </button>
+            <Stepper step={2} />
+          </div>
           <div className="onboarding-area">
             <div className="onboarding-area-content">
               <h1>Which area is<br />your home in?</h1>
